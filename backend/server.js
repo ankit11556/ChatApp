@@ -3,8 +3,16 @@ const connectDb = require('./config/db')
 dotenv.config()
 const express = require('express')
 const app = express()
+const cors = require('cors')
 
 connectDb();
+
+app.use(express.json());
+app.use(cors())
+
+const userRotute = require('./routes/userRoutes')
+
+app.use('/api/v1/user',userRotute)
 
 app.get("/",(req,res)=>{
   res.send("API is running...")
