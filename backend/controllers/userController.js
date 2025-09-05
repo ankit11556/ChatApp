@@ -33,3 +33,27 @@ exports.register = async (req,res) => {
     res.status(500).json({message: "User not register",error: error.message})
   }
 }
+
+exports.login = async (req,res) => {
+  try {
+    const {userName,password} = req.body;
+    const user = await UserModel.findOne({userName});
+
+    if (!user) {
+      return res.status(404).json({message: "User not found. Please register first."})
+    }
+
+    const isPasswordMatch = await user.isPasswordCompare(password);
+    if (!isPasswordMatch) {
+      return res.status(403).json({message: "Invalid credentials"})
+    }
+    res.status(201).json({message: "login successfull",
+      user: {
+        userName: user.userName,
+        userId: user._id
+      }
+    })
+  } catch (error) {
+    res.status(500).json({message: 'login failed',error: error.message})
+  }
+}
