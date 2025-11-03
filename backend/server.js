@@ -10,9 +10,11 @@ connectDb();
 app.use(express.json());
 app.use(cors())
 
-const userRotute = require('./routes/userRoutes')
+const userRoute = require('./routes/userRoutes')
+const messageRoute = require('./routes/messageRoute')
 
-app.use('/api/v1/user',userRotute)
+app.use('/api/v1/user',userRoute)
+app.use('/api/v1/message',messageRoute)
 
 app.get("/",(req,res)=>{
   res.send("API is running...")
