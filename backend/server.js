@@ -4,11 +4,13 @@ dotenv.config()
 const express = require('express')
 const app = express()
 const cors = require('cors')
+const  cookieParser = require('cookie-parser')
 
 connectDb();
 
 app.use(express.json());
 app.use(cors())
+app.use(cookieParser())
 
 const userRoute = require('./routes/userRoutes')
 const messageRoute = require('./routes/messageRoute')

@@ -63,3 +63,13 @@ exports.login = async (req,res) => {
     res.status(500).json({message: 'login failed',error: error.message})
   }
 }
+
+exports.getOtherUsers = async (req,res) => {
+  try {
+    const loggedInUserId = req.id; 
+    const otherUsers = await UserModel.find({_id:{$ne:loggedInUserId}}).select("-password");
+    return res.status(200).json(otherUsers)
+  } catch (error) {
+    console.log(error);
+  }
+}
