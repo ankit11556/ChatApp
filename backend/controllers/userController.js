@@ -1,5 +1,6 @@
 const UserModel = require("../models/userModel");
 const generateToken = require("../utils/GenerateToken");
+const setCookies = require("../utils/SetCookies");
 
 exports.register = async (req,res) => {
   try {
@@ -50,7 +51,7 @@ exports.login = async (req,res) => {
     }
 
     const token = generateToken(user._id)
-    console.log(token);
+    setCookies(res,token)
     
     res.status(201).json({message: "login successfull",
       user: {
