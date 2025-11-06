@@ -1,4 +1,5 @@
 const UserModel = require("../models/userModel");
+const generateToken = require("../utils/GenerateToken");
 
 exports.register = async (req,res) => {
   try {
@@ -47,6 +48,10 @@ exports.login = async (req,res) => {
     if (!isPasswordMatch) {
       return res.status(403).json({message: "Invalid credentials"})
     }
+
+    const token = generateToken(user._id)
+    console.log(token);
+    
     res.status(201).json({message: "login successfull",
       user: {
         userName: user.userName,
