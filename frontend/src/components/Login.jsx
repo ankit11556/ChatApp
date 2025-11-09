@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { loginApi } from "../services/UserApi";
 import {Link} from "react-router-dom"
+import { useDispatch } from "react-redux";
 
 const Login = () => {
   const [formData,setFormData] = useState({
@@ -8,8 +9,10 @@ const Login = () => {
     password: ""
   })
 
+  const dispatch = useDispatch()
+
   const handleChange = (e)=>{
-const { name, value } = e.target;
+  const { name, value } = e.target;
     setFormData((prevFormData) => ({
       ...prevFormData,
       [name]: value,
@@ -21,6 +24,7 @@ const { name, value } = e.target;
     try {
       const res = await loginApi(formData) 
       alert(res.data.message)
+      dispatch(setAuthUser(res.data))
     } catch (error) {
       alert(error.response?.data?.message)
     }
@@ -37,8 +41,8 @@ const { name, value } = e.target;
             }}
           ></div>
         </div>
-        <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
-          <div className=" flex flex-col items-center ">
+        <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12 items-center flex">
+          <div className=" flex flex-col w-full ">
             <div className="text-center">
               <h1 className="text-2xl xl:text-4xl font-extrabold text-blue-900">
                  Login
